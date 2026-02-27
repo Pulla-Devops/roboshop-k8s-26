@@ -57,3 +57,36 @@ spec:
       # Pauses the rollout indefinitely until you manually promote it.
       # This gives you time to hit 'preview.api.mycompany.com' and test it.
       autoPromotionEnabled: false
+
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: my-app-ingress
+  annotations:
+    # Add your specific ingress controller annotations here (e.g., nginx, alb)
+    nginx.ingress.kubernetes.io/rewrite-target: /
+spec:
+  rules:
+    # 1. Public Production URL
+    - host: api.mycompany.com
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: my-app-active # Points to the Active Service
+                port:
+                  number: 8080
+    # 2. Internal/Private Preview URL
+    - host: preview.api.mycompany.com
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: my-app-preview # Points to the Preview Service
+                port:
+                  number: 8080
