@@ -1,1 +1,59 @@
-test
+---
+# The Active Service (Production Traffic)
+apiVersion: v1
+kind: Service
+metadata:
+  name: my-app-active
+spec:
+  ports:
+    - port: 8080
+      targetPort: 8080
+      protocol: TCP
+  selector:
+    app: my-app
+---
+# The Preview Service (Testing/QA Traffic)
+apiVersion: v1
+kind: Service
+metadata:
+  name: my-app-preview
+spec:
+  ports:
+    - port: 8080
+      targetPort: 8080
+      protocol: TCP
+  selector:
+    app: my-app
+---
+apiVersion: argoproj.io/v1alpha1
+kind: Rollout
+metadata:
+  name: my-app
+spec:
+  replicas: 3
+  revisionHistoryLimit: 2
+  selector:
+    matchLabels:
+      app: my-app
+  template:
+    metadata:
+      labels:
+        app: my-app
+    spec:
+      containers:
+        - name: my-app
+          image: version:latest 
+          env:
+          - name: APP_VERSION
+            value: v1
+          ports:
+            - containerPort: 8080
+  strategy:
+    blueGreen:
+      # Argo Rollouts will manage the routing for these two services
+      activeService: my-app-active
+      previewService: my-app-preview
+      
+      # Pauses the rollout indefinitely until you manually promote it.
+      # This gives you time to hit 'preview.api.mycompany.com' and test it.
+      autoPromotionEnabled: false
