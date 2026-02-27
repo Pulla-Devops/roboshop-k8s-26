@@ -67,6 +67,7 @@ metadata:
     # Add your specific ingress controller annotations here (e.g., nginx, alb)
     nginx.ingress.kubernetes.io/rewrite-target: /
 spec:
+  ingressClassName: nginx
   rules:
     # 1. Public Production URL
     - host: api.mycompany.com
