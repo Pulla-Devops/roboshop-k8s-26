@@ -19,7 +19,7 @@ spec:
             parameters:
             - name: random_num
               value: "{{tasks.B.outputs.parameters.random_num}}"
-          dependencies: [A]
+          dependencies: [A, B]
         - name: D
           template: delay-template
           dependencies: [B, C]
