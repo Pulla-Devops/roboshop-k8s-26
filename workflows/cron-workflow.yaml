@@ -1,7 +1,7 @@
 apiVersion: argoproj.io/v1alpha1
 kind: CronWorkflow
 metadata:
-  generateName: argo-cron-wf-
+  name: argo-cron-wf
 spec:
   schedule: "*/2 * * * *"
   suspend: false
