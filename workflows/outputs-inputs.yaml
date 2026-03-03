@@ -65,7 +65,7 @@ spec:
           generateName: argo-wf-resource-template-cm-
         data:
           created_by: argo-workflows
-          number: {{inputs.parameters.random_num}}
+          number: "{{inputs.parameters.random_num}}"
   - name: delay-template # Defining the "delay template" as a Template Definition
     suspend:
       duration: "20s"
