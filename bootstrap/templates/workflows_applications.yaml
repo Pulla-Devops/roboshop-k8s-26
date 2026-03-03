@@ -7,9 +7,9 @@ spec:
   project: default
   source:
     directory:
-      repoURL: https://github.com/PullaPantangi/roboshop-k8s-26.git
-      targetRevision: master
-      path: workflows 
+    repoURL: https://github.com/PullaPantangi/roboshop-k8s-26.git
+    targetRevision: master
+    path: workflows 
   destination:
     server: https://kubernetes.default.svc
     namespace: workflows
