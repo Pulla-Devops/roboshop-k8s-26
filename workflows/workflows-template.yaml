@@ -1,0 +1,12 @@
+apiVersion: argoproj.io/v1alpha1
+kind: WorkflowTemplate
+metadata:
+  name: argo-wf-test  # Name of this Workflow
+spec:
+  templates:
+  - name: container-template # Defining the "container template" as a Template Definition
+    container:
+      image: alpine
+      command: ["/bin/sh", "-c"]
+      args: ["echo {{workflow.parameters.message}}"]
+
