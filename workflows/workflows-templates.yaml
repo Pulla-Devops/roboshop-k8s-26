@@ -1,7 +1,7 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Workflow
 metadata:
-  generateName: argo-wf-test-  # Name of this Workflow
+  name: argo-wf-test-  # Name of this Workflow
 spec:
   entrypoint: dag-template # Defines "dag-template" as the "main" template
   templates:
