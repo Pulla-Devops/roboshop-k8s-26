@@ -32,7 +32,7 @@ spec:
       - name: text_in_file
         path: /tmp/test2.txt
     script:
-      image: python:alpine3.6
+      image: alpine
       command: ["/bin/sh","-c"]
       args: ["cat /tmp/test2.txt"]
 
