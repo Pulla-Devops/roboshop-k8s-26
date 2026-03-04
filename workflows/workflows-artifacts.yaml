@@ -1,7 +1,7 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Workflow
 metadata:
-  name: argo-wf-test  # Name of this Workflow
+  name: argo-wf-test-artifact  # Name of this Workflow
 spec:
   entrypoint: dag-template # Defines "dag-template" as the "main" template
   templates:
@@ -16,7 +16,7 @@ spec:
           arguments:
             artifacts:
               - name: text_in_file
-                from: {{tasks.A.outputs.artifacts.text_out_file}}
+                from: "{{tasks.A.outputs.artifacts.text_out_file}}"
   - name: container-template # Defining the "container template" as a Template Definition
     outputs:
       artifacts:
