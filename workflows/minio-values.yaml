@@ -1,0 +1,19 @@
+mode: standalone
+replicas: 1
+persistence:
+  storageClass: hostpath
+  size: 2Gi
+service:
+  type: NodePort
+  nodePort: 32000
+resources:
+  requests:
+    memory: 100Mi
+ingress:
+  enabled: true
+  ingressClassName: nginx
+  path: /
+  hosts:
+    - minio.kantanm.com
+rootUser: pullaraop
+rootPassword: Bhuvika12041993
