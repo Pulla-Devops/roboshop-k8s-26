@@ -1,0 +1,38 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Workflow
+metadata:
+  name: argo-wf-test-artifact-5  # Name of this Workflow
+spec:
+  entrypoint: dag-template # Defines "dag-template" as the "main" template
+  templates:
+  - name: dag-template # Defining the "dag template" as a Template Invocator, You must use one of "dag" or "steps" as a template invocator
+    dag:
+      tasks:
+        - name: A
+          template: container-template
+        - name: B
+          template: script-template
+          dependencies: [A]
+          arguments:
+            artifacts:
+              - name: text_in_file
+                from: "{{tasks.A.outputs.artifacts.text_out_file}}"
+  - name: container-template # Defining the "container template" as a Template Definition
+    outputs:
+      artifacts:
+      - name: text_out_file
+        path: /tmp/test.txt
+    container:
+      image: alpine
+      command: ["/bin/sh", "-c"]
+      args: ["echo Hello from container template >> /tmp/test.txt"]
+  - name: script-template # Defining the "script template" as a Template Definition
+    inputs:
+      artifacts:
+      - name: text_in_file
+        path: /tmp/test2.txt
+    script:
+      image: alpine
+      command: ["/bin/sh","-c"]
+      args: ["cat /tmp/test2.txt"]
+
