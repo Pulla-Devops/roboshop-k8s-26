@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
       - name: blue-green
-        image: rollout_nginx:latest
+        image: pullapantangi/rollout_nginx
         env:
         - name: APP_VERSION
           value: "v2"
