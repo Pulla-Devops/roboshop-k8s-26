@@ -583,8 +583,8 @@ spec:
             pathType: Prefix
             backend:
               service:
-                name: minio
+                name: minio-console
                 port: 
-                  number: 9000
+                  number: 9001
       host: "minio.kantanm.com"
 
