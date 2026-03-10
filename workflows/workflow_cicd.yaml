@@ -1,0 +1,103 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Workflow
+metadata:
+  generateName: buildkit-pipeline-
+spec:
+  entrypoint: pipeline
+
+  volumes:
+  - name: workspace
+    emptyDir: {}
+
+  - name: docker-config
+    secret:
+      secretName: docker-config
+
+  templates:
+
+  - name: pipeline
+    steps:
+    - - name: clone
+        template: clone-repo
+
+    - - name: build
+        template: build-image
+
+    - - name: update-manifest
+        template: update-rollout
+
+    - - name: commit
+        template: commit-changes
+
+  ################################################
+  # Clone repository
+  ################################################
+
+  - name: clone-repo
+    container:
+      image: alpine/git
+      command: [sh, -c]
+      args:
+        - |
+          git clone https://github.com/PullaPantangi/roboshop-k8s-26.git /workspace
+      volumeMounts:
+      - name: workspace
+        mountPath: /workspace
+
+  ################################################
+  # Build image using BuildKit
+  ################################################
+
+  - name: build-image
+    container:
+      image: moby/buildkit:latest
+      securityContext:
+        privileged: true
+      command: [sh, -c]
+      args:
+        - |
+          buildctl-daemonless.sh build \
+          --frontend dockerfile.v0 \
+          --local context=/workspace/argo_versions_app/ \
+          --local dockerfile=/workspace/argo_versions_app/ \
+          --output type=image,name=pullapantangi/app_version_wf:{{workflow.uid}},push=true
+      volumeMounts:
+      - name: workspace
+        mountPath: /workspace
+      - name: docker-config
+        mountPath: /root/.docker
+
+  ################################################
+  # Update Argo Rollout manifest
+  ################################################
+
+  - name: update-rollout
+    container:
+      image: alpine
+      command: [sh, -c]
+      args:
+        - |
+          sed -i 's/image: .*/image: pullapantangi/app_version_wf:{{workflow.uid}}|' /workspace/argo_versions_app/blue-green-rollout.yaml
+      volumeMounts:
+      - name: workspace
+        mountPath: /workspace
+
+  ################################################
+  # Commit changes to Git
+  ################################################
+
+  - name: commit-changes
+    container:
+      image: alpine/git
+      command: [sh, -c]
+      args:
+        - |
+          cd /workspace
+          git config user.email "rao.linux9@gmail.com"
+          git config user.name "pullarao.pantangi"
+          git add .
+          git commit -m "update image {{workflow.uid}}"
+          git push
+      volumeMounts:
+      - name: workspace
+        mountPath: /workspace
