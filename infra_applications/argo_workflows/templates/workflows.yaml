@@ -55,7 +55,7 @@ data:
       endpoint: minio.minio.svc.cluster.local:9000
       insecure: true
       # This 'key' tells Argo how to organize files in S3 automatically
-      keyFormat: "artifacts/{{workflow.namespace}}/{{workflow.name}}/{{pod.name}}"
+      keyFormat: "artifacts/{{"{{"}}workflow.namespace{{"}}"}}/{{"{{"}}workflow.name{{"}}"}}/{{"{{"}}pod.name{{"}}"}}"
       accessKeySecret:
         name: argo-s3-credentials # Name of the K8s Secret
         key: accessKey            # Key inside that Secret
