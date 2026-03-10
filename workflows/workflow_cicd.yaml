@@ -58,8 +58,8 @@ spec:
         - |
           buildctl-daemonless.sh build \
           --frontend dockerfile.v0 \
-          --local context=/workspace/argo_versions_app/ \
-          --local dockerfile=/workspace/argo_versions_app/ \
+          --local context=/workspace/argo_versions_app \
+          --local dockerfile=/workspace/argo_versions_app \
           --output type=image,name=pullapantangi/app_version_wf:{{workflow.uid}},push=true
       volumeMounts:
       - name: workspace
