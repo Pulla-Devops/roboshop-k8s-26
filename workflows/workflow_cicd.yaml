@@ -39,10 +39,10 @@ spec:
       command: [sh, -c]
       args:
         - |
-          git clone https://github.com/PullaPantangi/roboshop-k8s-26.git /workspace
+          git clone https://github.com/PullaPantangi/roboshop-k8s-26.git /workspace/argo_versions_app
       volumeMounts:
       - name: workspace
-        mountPath: /workspace
+        mountPath: /workspace/argo_versions_app
 
   ################################################
   # Build image using BuildKit
@@ -63,7 +63,7 @@ spec:
           --output type=image,name=pullapantangi/app_version_wf:{{workflow.uid}},push=true
       volumeMounts:
       - name: workspace
-        mountPath: /workspace
+        mountPath: /workspace/argo_versions_app
       - name: docker-config
         mountPath: /root/.docker
 
@@ -80,7 +80,7 @@ spec:
           sed -i 's/image: .*/image: pullapantangi/app_version_wf:{{workflow.uid}}|' /workspace/argo_versions_app/blue-green-rollout.yaml
       volumeMounts:
       - name: workspace
-        mountPath: /workspace
+        mountPath: /workspace/argo_versions_app
 
   ################################################
   # Commit changes to Git
@@ -100,4 +100,4 @@ spec:
           git push
       volumeMounts:
       - name: workspace
-        mountPath: /workspace
+        mountPath: /workspace/argo_versions_app
