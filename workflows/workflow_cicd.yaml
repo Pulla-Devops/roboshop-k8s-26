@@ -129,7 +129,7 @@ spec:
         - |
           cd /workspace
           git config user.email "rao.linux9@gmail.com"
-          git config user.name "pullarao.pantangi"
+          git config user.name "pullarao"
           git add .
           git commit -m "update image {{workflow.uid}}"
           git push
