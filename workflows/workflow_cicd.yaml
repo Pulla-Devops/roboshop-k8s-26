@@ -99,7 +99,8 @@ spec:
       - name: workspace
         mountPath: /workspace
       - name: docker-config
-        mountPath: /root/.docker
+        mountPath: /root/.docker/config.json
+        subPath: .dockerconfigjson
 
   ################################################
   # Update Argo Rollout manifest
