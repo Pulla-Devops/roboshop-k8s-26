@@ -7,7 +7,7 @@ spec:
 
   volumeClaimTemplates:
   - metadata:
-     name: workspace
+      name: workspace
     spec:
      accessModes: ["ReadWriteOnce"]
      storageClassName: hostpath
