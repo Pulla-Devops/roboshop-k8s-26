@@ -45,17 +45,31 @@ spec:
       volumeMounts:
       - name: workspace
         mountPath: /workspace
+          #  - name: list-repo
+          #    container:
+          #      image: alpine/git
+          #      command: [sh, -c]
+          #      args:
+          #        - |
+          #          "echo $(ls -l /workspace)"
+          #      volumeMounts:
+          #      - name: workspace
+          #        mountPath: /workspace
   - name: list-repo
     container:
-      image: alpine/git
+      image: alpine
       command: [sh, -c]
       args:
         - |
-          "echo $(ls -l /workspace)"
+          echo "Listing workspace directory"
+          ls -l /workspace
+          echo "Recursive listing"
+          ls -R /workspace
       volumeMounts:
       - name: workspace
         mountPath: /workspace
-
+  
+  
   ################################################
   # Build image using BuildKit
   ################################################
