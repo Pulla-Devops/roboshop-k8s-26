@@ -43,6 +43,16 @@ spec:
       volumeMounts:
       - name: workspace
         mountPath: /workspace
+  - name: list-repo
+    container:
+      image: alpine/git
+      command: [sh, -c]
+      args:
+        - |
+          ls -l /workspace
+      volumeMounts:
+      - name: workspace
+        mountPath: /workspace
 
   ################################################
   # Build image using BuildKit
