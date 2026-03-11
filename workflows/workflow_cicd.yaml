@@ -19,6 +19,8 @@ spec:
     steps:
     - - name: clone
         template: clone-repo
+    - - name: list
+        template: list-repo
 
     - - name: build
         template: build-image
