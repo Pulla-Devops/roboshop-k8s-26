@@ -124,11 +124,11 @@ spec:
   - name: commit-changes
     container:
       env:
-        - name: GITHUB_TOKEN
-            valueFrom:
-              secretKeyRef:
-                name: github-creds
-                key: token
+      - name: GITHUB_TOKEN
+        valueFrom:
+          secretKeyRef:
+            name: github-creds
+            key: token
       image: alpine/git
       command: [sh, -c]
       args:
