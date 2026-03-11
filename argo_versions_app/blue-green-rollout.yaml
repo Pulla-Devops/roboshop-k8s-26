@@ -15,7 +15,7 @@ spec:
     spec:
       containers:
       - name: blue-green
-        image: pullapantangi/rollout_nginx
+        image: pullapantangi/app_version_wf:d8f07ab9-80b3-4d17-9e5d-eabbc0d0f5a1
         env:
         - name: APP_VERSION
           value: "v1"
