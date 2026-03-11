@@ -123,6 +123,12 @@ spec:
 
   - name: commit-changes
     container:
+      env:
+        - name: GITHUB_TOKEN
+            valueFrom:
+              secretKeyRef:
+                name: github-creds
+                key: token
       image: alpine/git
       command: [sh, -c]
       args:
@@ -130,6 +136,7 @@ spec:
           cd /workspace
           git config user.email "rao.linux9@gmail.com"
           git config user.name "pullarao"
+          git remote set-url origin https://pullapantangi:${GITHUB_TOKEN}@github.com/PullaPantangi/roboshop-k8s-26.git
           git add .
           git commit -m "update image {{workflow.uid}}"
           git push
