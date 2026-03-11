@@ -5,9 +5,15 @@ metadata:
 spec:
   entrypoint: pipeline
 
-  volumes:
-  - name: workspace
-    emptyDir: {}
+  volumeClaimTemplates:
+  - metadata:
+     name: workspace
+    spec:
+     accessModes: ["ReadWriteOnce"]
+     storageClassName: hostpath
+     resources:
+       requests:
+         storage: 1Gi
 
   - name: docker-config
     secret:
@@ -41,7 +47,7 @@ spec:
       command: [sh, -c]
       args:
         - |
-          git clone https://github.com/PullaPantangi/roboshop-k8s-26.git /workspace/repo
+          git clone https://github.com/PullaPantangi/roboshop-k8s-26.git /workspace
           echo "after clone"
           ls -R /workspace
       volumeMounts:
@@ -105,7 +111,7 @@ spec:
       command: [sh, -c]
       args:
         - |
-          sed -i 's/image: .*/image: pullapantangi/app_version_wf:{{workflow.uid}}|' /workspace/argo_versions_app/blue-green-rollout.yaml
+          sed -i 's|image: .*|image: pullapantangi/app_version_wf:{{workflow.uid}}|' /workspace/argo_versions_app/blue-green-rollout.yaml
       volumeMounts:
       - name: workspace
         mountPath: /workspace
