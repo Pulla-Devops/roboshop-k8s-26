@@ -51,7 +51,7 @@ spec:
       command: [sh, -c]
       args:
         - |
-          ls -l /workspace
+          "echo $(ls -l /workspace)"
       volumeMounts:
       - name: workspace
         mountPath: /workspace
