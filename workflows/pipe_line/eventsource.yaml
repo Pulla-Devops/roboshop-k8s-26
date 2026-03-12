@@ -24,3 +24,6 @@ spec:
       webhookSecret:
         name: github-webhook-secret
         key: secret
+      apiToken:
+        name: github-access-token # Secret containing your PAT
+        key: token
