@@ -1,0 +1,29 @@
+apiVersion: argoproj.io/v1alpha1
+kind: EventSource
+metadata:
+  name: ci
+  namespace: argo-events
+spec:
+  service:
+    ports:
+      - port: 12000
+        targetPort: 12000
+  github:
+    github-webhook:
+      # Port for the internal HTTP listener
+      port: "12000"
+      # The endpoint that GitHub will POST to (e.g., http://your-url/push)
+      endpoint: /push
+      # GitHub uses POST for webhooks
+      method: POST
+      # The repository details
+      owner: "pullapantangi"
+      names:
+        - "versioned_app_test"
+      # Events to listen for
+      events:
+        - push
+      # Secret for payload verification
+      webhookSecret:
+        name: github-webhook-secret
+        key: secret
