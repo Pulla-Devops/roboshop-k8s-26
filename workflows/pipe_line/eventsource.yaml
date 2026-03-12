@@ -9,18 +9,15 @@ spec:
       - port: 12000
         targetPort: 12000
   github:
-    github-webhook:
-      # Port for the internal HTTP listener
-      port: "12000"
-      # The endpoint that GitHub will POST to (e.g., http://your-url/push)
-      endpoint: /push
-      # GitHub uses POST for webhooks
-      method: POST
+    push-event:
+      webhook:
+        port: "12000"
+        endpoint: /push
+        method: POST
       # The repository details
       owner: "pullapantangi"
-      names:
-        - "versioned_app_test"
-      # Events to listen for
+      repositories:
+        - name: "versioned_app_test"
       events:
         - push
       # Secret for payload verification
