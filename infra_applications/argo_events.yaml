@@ -19,3 +19,7 @@ spec:
   destination:
     server: https://kubernetes.default.svc
     namespace: argo-events
+  syncPolicy:
+    syncOptions:
+      - CreateNamespace=true
+      - Replace=true  # This helps with conflict resolution
