@@ -1,0 +1,21 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: argo-events
+  namespace: argocd
+  finalizers:
+    - resources-finalizer.argocd.argoproj.io
+spec:
+  project: default
+  source:
+    repoURL: https://argoproj.github.io/argo-helm
+    targetRevision: 2.4.20 # Use the latest stable version
+    chart: argo-events
+    helm:
+      # Optional: Override values here instead of a separate file
+      parameters:
+        - name: "controller.replicaCount"
+          value: "1"
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: argo-events
