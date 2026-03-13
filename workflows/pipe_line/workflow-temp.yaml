@@ -40,7 +40,7 @@ spec:
       command: [sh, -c]
       args:
         - |
-          git clone https://github.com/PullaPantangi/roboshop-k8s-26.git /workspace
+          git clone https://github.com/PullaPantangi/versioned_app_test /workspace
           echo "after clone"
           ls -R /workspace
       volumeMounts:
@@ -82,8 +82,8 @@ spec:
         - |
           buildctl-daemonless.sh build \
           --frontend dockerfile.v0 \
-          --local context=/workspace/argo_versions_app \
-          --local dockerfile=/workspace/argo_versions_app \
+          --local context=/workspace \
+          --local dockerfile=/workspace \
           --output type=image,name=pullapantangi/app_version_wf:{{workflow.uid}},push=true
       volumeMounts:
       - name: workspace
