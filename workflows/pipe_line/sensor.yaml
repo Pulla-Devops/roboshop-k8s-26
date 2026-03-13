@@ -4,7 +4,8 @@ metadata:
   name: github-push-sensor
   namespace: argo-events
 spec:
-  serviceAccountName: operate-workflow-sa
+  template:
+    serviceAccountName: operate-workflow-sa
   dependencies:
     - name: github-dep
       eventSourceName: ci
