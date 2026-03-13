@@ -7,9 +7,9 @@ spec:
   project: default
   source:
     directory:
-    repoURL: https://github.com/PullaPantangi/roboshop-k8s-26.git
+    repoURL: https://github.com/PullaPantangi/versioned_app_test.git
     targetRevision: master
-    path: argo_versions_app 
+    path: .
   destination:
     server: https://kubernetes.default.svc
     namespace: workflows
