@@ -1,0 +1,27 @@
+kind: Sensor
+metadata:
+  name: github-push-sensor
+  namespace: argo-events
+spec:
+  template:
+    spec:
+      serviceAccountName: operate-workflow-sa
+  dependencies:
+    - name: github-dep
+      eventSourceName: ci
+      eventName: push-event
+  triggers:
+    - template:
+        name: workflow-trigger
+        k8s:
+          operation: create
+          source:
+            resource:
+              apiVersion: argoproj.io/v1alpha1
+              kind: Workflow
+              metadata:
+                genarateName: buildkit-pipeline
+                namespace: workflows
+              spec:              
+                workflowTemplateRef:
+                  name: buildkit-template
