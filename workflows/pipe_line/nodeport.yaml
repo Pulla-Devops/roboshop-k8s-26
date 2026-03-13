@@ -1,0 +1,14 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: ci-nodeport-svc
+  namespace: argo-events
+spec:
+  type: NodePort
+  selector:
+    # This must match the labels of your EventSource pod
+    eventsource-name: ci 
+  ports:
+    - port: 12000
+      targetPort: 12000
+      nodePort: 30017 # Static port for Docker Desktop
