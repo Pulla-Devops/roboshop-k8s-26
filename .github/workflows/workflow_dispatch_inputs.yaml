@@ -6,6 +6,11 @@ on:
         description: "Environment to deploy"
         required: true
         default: "dev"
+        type: choise
+        options:
+          - dev
+          - test
+          - prod 
       version:
         description: "Version to be deployed"
         required: true
