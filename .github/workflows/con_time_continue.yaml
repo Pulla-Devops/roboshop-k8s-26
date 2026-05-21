@@ -1,0 +1,50 @@
+name: mix of concurancy andtimeout 
+on:
+  #  push:
+  #  branches:
+  #    - master
+  workflow_dispatch:
+    inputs:
+      environment:
+        required: true
+        type: choice
+        options:
+          - dev
+          - prod 
+concurrency:
+  group: ${{ github.event.inputs.environment }}-${{ github.ref }}
+  cancel-in-progress: false
+jobs:
+  build:
+    timeout-minutes: 5 ###### Job level 
+    continue-on-error: true
+    runs-on: ubuntu-latest
+    steps:
+      - name: build image
+        timeout-minutes: 1
+        continue-on-error: true
+        run: | 
+          echo "building image"
+          sleep 120
+      - name: scan the image
+        timeout-minutes: 1
+        run: |
+          echo "scaning the image ..."
+          sleep 30 
+      - name: clean up activity
+        if: ${{ failure() }}
+        run: |
+          echo "cleaning up things"
+          sleep 30 
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
+      - name: deploying image 
+        run: |
+          echo "deploying application"
+          sleep 120
+
+
+
