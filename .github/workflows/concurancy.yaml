@@ -1,0 +1,22 @@
+name: concurancy workflow
+on:
+  push:
+    branches:
+      - master
+timeout-minutes: 5
+concurancy:
+  group: dev-${{ github.ref }}
+  cancel-in-progress: false
+jobs:
+  build:
+    steps:
+      - name: builiding image 
+        run: |
+          echo "Building image"
+          sleep 10
+  deploy:
+    steps:
+      - name:
+        run: |
+          echo "deploying image"
+          sleep 10
