@@ -6,9 +6,15 @@ on:
 jobs:
   timeout_job:
     runs-on: ubuntu-latest
-    timeout-minutes: 1
+    timeout-minutes: 5
     steps:
-      - name: time_out example 
+      - name: time_out example
+        timeout-minutes: 1
         run: |
           echo "This job will run for 60 seconds if there is no timeout mentioned"
           sleep 80
+      - name: this step will not exevute
+        run: echo "not executed"
+      - name: this function works as the job got failed
+        if: ${{ failure() }}
+        run: echo "Executing as the job job got failed"
