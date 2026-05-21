@@ -2,7 +2,7 @@ name: first workflow
 on:
   push:
     branch: 
-      - main
+      - master
 jobs:
   test-job-1:
     runs-on: ubuntu-latest
