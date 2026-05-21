@@ -16,5 +16,5 @@ jobs:
     steps:
       - name: given env values
         run: |
-          echo "Deploying to version: ${{ github.events.inputs.environment }}"
-          echo "Deploying application version: ${{ github.events.inputs.version }}"
+          echo "Deploying to version: ${{ github.event.inputs.environment }}"
+          echo "Deploying application version: ${{ github.event.inputs.version }}"
