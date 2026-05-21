@@ -1,7 +1,7 @@
 name: first workflow
 on:
   push:
-    branch: 
+    branchs: 
       - master
 jobs:
   test-job-1:
