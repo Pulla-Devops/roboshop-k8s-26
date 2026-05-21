@@ -4,7 +4,7 @@ on:
     branches:
       - master
 jobs:
-  time_out job:
+  timeout job:
     runs-on: ubuntu-latest
     timeout-minutes: 1
     steps:
