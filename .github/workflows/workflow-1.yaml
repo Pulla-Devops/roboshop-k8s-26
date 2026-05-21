@@ -9,7 +9,7 @@ jobs:
     steps:
       - name: step1
         run: |
-	    echo "Sleeping for 30 seconds"
-	    sleep 30
-	    echo "done"
+	  echo "Sleeping for 30 seconds"
+	  sleep 30
+	  echo "done"
 
