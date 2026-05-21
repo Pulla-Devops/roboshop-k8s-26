@@ -1,7 +1,7 @@
 name: first workflow
 on:
   push:
-    branches: 
+    branches:
       - master
 jobs:
   test-job-1:
@@ -9,7 +9,6 @@ jobs:
     steps:
       - name: step1
         run: |
-	  echo "Sleeping for 30 seconds"
-	  sleep 30
-	  echo "done"
-
+          echo "Sleeping for 30 seconds"
+          sleep 30
+          echo "done"
